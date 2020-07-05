@@ -2,6 +2,7 @@ const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 module.exports = {
@@ -53,7 +54,12 @@ module.exports = {
       template:'./src/public/index.html'
     }),//加一个配置对象让vue可以找到对应的模板挂载点,本质就是让vue去找对应的html文件
     new CleanWebpackPlugin(),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new CopyWebpackPlugin([{
+      from:'./src/public',
+      to:path.resolve(__dirname, 'dist'),//配置的绝对路径
+      ignore:['index.html']
+    }])//为了把css拷贝到dist下
   ],
   devServer: {
     port: 9000,
@@ -61,4 +67,11 @@ module.exports = {
     quiet:true
   },
   devtool:'cheap-module-eval-source-map',
+  resolve:{
+    extensions: [".js", ".json", ".vue"], //自动解析包含的扩展名文件，以后导入不用带扩展名
+    alias: {
+      //配置别名的地方
+      '@': path.resolve(__dirname, 'src'), //这个别名代表以后@就是src的绝对路径
+    }
+  }
 };
