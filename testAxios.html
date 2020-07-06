@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+  <script>
+    //axios的基本使用
+    //函数用法以及对象用法
+    //
+
+
+
+    async function sendAjax() {
+      try {
+        const result = await axios({
+          url: 'https://api.github.com/search/repositories',
+          // /8也是一种参数，真正的params参数
+          method: 'GET',
+          params: {
+            //params参数对应的是我们所说的query参数，url查询参数 ？key=value
+            //如果url里面写了这个query参数，这里就不需要写了
+            // username:'zhaoliying'
+            // ?q=v&sort=stars'
+            q: 'v',
+            sort: 'stars'
+          },
+          // data:{
+          //   //data参数对应的是请求体参数
+          // }
+        })
+        console.log(result.data)
+      } catch (error) {
+        console.log(error.message)
+      }
+      
+    }
+
+    // async函数返回值一定是promise
+    // 返回的promise成功还是失败看这个函数的返回值
+    // 分两种情况：返回值返回的是promise，要么就是一个数据，要么throw一个ERROR
+    // 返回的值是一个promise,name这个async函数返回的promise成功和失败就看这个promise的状态
+    // 是一个ERROR,那么就是失败的
+    // 其余都是成功的
+
+    sendAjax()
+
+  </script>
+</body>
+
+</html>

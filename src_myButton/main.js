@@ -32,7 +32,7 @@ Either pre-compile the templates into render functions, or use the compiler-incl
     import Vue from 'vue/dist/vue.esm.js'
 */
 
-import Vue from 'vue'//代表我导入vue的时候默认选择有解析器的版本
+import Vue from 'vue'
 import App from './App'
 new Vue({
   el:'#root',

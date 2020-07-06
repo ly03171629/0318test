@@ -1,7 +1,11 @@
 <template>
-  <div class="todo-header">
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认" @keyup.enter="addT" v-model="content"/>
-  </div>
+  <section class="jumbotron">
+    <h3 class="jumbotron-heading">Search Github Users</h3>
+    <div>
+      <input type="text" placeholder="enter the name you search" v-model="searchName" />
+      <button @click="search">Search</button>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -9,55 +13,20 @@ export default {
   name: "",
   data(){
     return {
-      content:''
+      searchName:''
     }
   },
-  props:{
-    // addTodo:Function
-  },
-
-  
-
   methods:{
-    addT(){
-      let {content} = this
-      if(content.trim()){
-        let id = Date.now()
-        let isOver = false
-        let todo = {
-          id,
-          isOver,
-          content
-        }
-
-        //去调用App组件内部的增加数据的方法去添加，不能在这直接去操作别人的数据
-
-        // this.addTodo(todo) //props通信使用的
-        this.$emit('addTodo',todo)//触发自定义事件
-      }else{
-        alert('请输入合法内容')
-      }
-      this.content = ''
+    search(){
+      //本来我们可以在这发请求获取数据，但是在这获取到数据是都要通信操作给Main去存储
+      //因为我们的数据设计在Main当中
+      //所以我们在这可以把输入的关键字搜索名字  传递给Main组件，然后再Main组件当中去发请求
+      //这样的话，Main组件拿到数据后不用通信，直接修改存储
+      this.$bus.$emit('searchAjax',this.searchName)
     }
   }
 };
 </script>
 
 <style scoped>
-/*header*/
-.todo-header input {
-  width: 560px;
-  height: 28px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 4px 7px;
-}
-
-.todo-header input:focus {
-  outline: none;
-  border-color: rgba(82, 168, 236, 0.8);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-    0 0 8px rgba(82, 168, 236, 0.6);
-}
 </style>
