@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 module.exports = {
-  entry: './src/main.js',
+  entry: ["@babel/polyfill", './src/main.js'],
   output: {
     path: path.resolve(__dirname, 'dist'), //在设置出口的目录路径  
     filename: 'main.js'
@@ -64,7 +64,19 @@ module.exports = {
   devServer: {
     port: 9000,
     open: true,
-    quiet:true
+    quiet:true,
+    proxy: {
+
+      // http://localhost:9000/api/users/info  我们请求的路径
+        
+      // http://localhost:4000/api/users/info  代理转发的初始路径
+      "/api": {
+          target: "http://localhost:4000",
+          pathRewrite: {"^/api" : ""},  //代理会把身份标识的东西去掉替换为空串
+          //  http://localhost:4000/api/users/info   =》  http://localhost:4000/users/info
+          changeOrigin:true  //协议  IP  端口任何改变都会解决
+      }
+    }
   },
   devtool:'cheap-module-eval-source-map',
   resolve:{

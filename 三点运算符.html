@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //...是用来拆包和打包
+    //拆包会出现在数组和对象
+    //打包会出现在函数形参
+
+    //不定参传参 打包
+    function fn(a,b,...arr){
+      console.log(arr)
+    }
+
+    fn(1,2,3,3,4,5)
+
+    //拆包
+    let arr = [1,2,3,4]
+    console.log(...arr)
+
+    let arr1 = [100,200,...arr]
+    console.log(arr1)
+
+
+    //对象想要拆包必须在对象内部拆
+
+    let obj = {
+      name:'zhaoliying',
+      age:33
+    }
+
+    // console.log(...obj)
+
+    let obj1 = {
+      ...obj
+    }
+    console.log(obj1)
+
+  </script>
+</body>
+</html>

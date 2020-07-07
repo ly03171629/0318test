@@ -17,6 +17,10 @@
 <script>
 import axios from 'axios'
 
+
+
+
+
 export default {
   name: "",
   data(){
@@ -36,8 +40,8 @@ export default {
       this.isFirst = false
       this.isLoading = true
       //就可以根据searchName去发送ajax请求
-      axios({
-        url:'https://api.github.com/search/users',
+      this.$http({
+        url:'https://api.github.com/search/us',
         method:'get',
         params:{
           q
@@ -54,7 +58,7 @@ export default {
         this.isLoading = false  //请求成功拿到数据，显示用户信息
 
       }).catch(error => {
-        this.errMsg = error.message
+        this.errMsg = error.statusText
         this.isLoading = false //请求失败拿到错误信息，显示错误信息
       })
     }
